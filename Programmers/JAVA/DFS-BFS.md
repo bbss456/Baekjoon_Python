@@ -29,67 +29,56 @@ class Solution {
 ```
 
 
->[타켓 넘버](https://school.programmers.co.kr/learn/courses/30/lessons/43165) 
+>[게임 맵 최단거리](https://school.programmers.co.kr/learn/courses/30/lessons/1844) 
 ###
 ```
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.awt.*;
 
-public class programmerce {
-    public int solution(int[][] maps) {
-        Queue<Integer> que = new LinkedList<>();
-
-        int heightMax = maps.length;
-        int widthMax = maps[0].length;
-        Boolean[][] visitBoolean = new Boolean[heightMax][widthMax];
-
-        int i=0;
-        int j=0;
-        for (i=0; i < heightMax; i++) {
-            for (j=0; j < widthMax; j++) {
-                visitBoolean[i][j] = false;
-            }
-        }
-
-
-
-        que.offer(0);
-        visitBoolean[0][0] = true;
+class Solution {
+      public int solution(int[][] maps) {
+        int X = maps[0].length;
+        int Y = maps.length;
+        boolean[][] visited = new boolean[Y][X];
+        Queue<Point> q = new LinkedList<Point>();
+        int x = 0;
+        int y = 0;
+        int size = 0;
         int distanceCost = 0;
-        int width = 0;
-        int h=0;
-
-        while (!que.isEmpty()) {
-            h = que.poll();
-            if (h <= heightMax-1 && maps[h+1][width]==1 && !visitBoolean[h+1][width]) {
-                que.offer(h+1);
-                distanceCost += 1;
-                h += 1;
-                visitBoolean[h][width] = true;
-            }
-            else if (h <=heightMax-1 && maps[h+1][width] != 1) {
-                if (maps[h][width + 1] == 1 && visitBoolean[h][width + 1] == false) {
-                    width += 1;
-                    que.offer(h-1);
-
-                } else if (h > 0 && visitBoolean[h - 1][width] == false && maps[h - 1][width] == 1) {
-                    que.offer(h-2);
-                } else if (width > 0 && visitBoolean[h][width - 1] == false && maps[h][width - 1] == 1) {
-                    width -= 1;
-                    visitBoolean[h - 1][width] = true;
-                    distanceCost += 1;
-                    que.offer(h);
+        Point p = new Point();
+        q.add(new Point(y,x));
+        while(q.isEmpty()==false) {
+            size = q.size();
+            distanceCost++;
+            for(int i=0;i<size;i++)
+            {
+                p = q.peek();
+                x = p.y;
+                y = p.x;
+                q.remove();
+                if(visited[y][x]==true)
+                    continue;
+                maps[y][x] = 0;
+                visited[y][x] = true;
+                if(x==X-1 && y==Y-1) {
+                    return distanceCost;
+                }
+                if(x-1 > -1 && maps[y][x-1]==1) {
+                    q.add(new Point(y,x-1));
+                }
+                if(x+1 < X && maps[y][x+1]==1) {
+                    q.add(new Point(y,x+1));
+                }
+                if(y-1 > -1 && maps[y-1][x]==1) {
+                    q.add(new Point(y-1,x));
+                }
+                if(y+1 < Y && maps[y+1][x]==1) {
+                    q.add(new Point(y+1,x));
                 }
             }
         }
-        System.out.println(distanceCost);
-        int answer = 0;
-        return answer;
-    }
-
-    public static void main(String args[]) {
-        int[][] s = 	{{1, 0, 1, 1, 1}, {1, 0, 1, 0, 1}, {1, 0, 1, 1, 1}, {1, 1, 1, 0, 1}, {0, 0, 0, 0, 1}};
-        programmerce solution =new programmerce();
-        solution.solution(s);
+        return -1;
     }
 }
 ```
