@@ -126,3 +126,21 @@ class Solution {
     }
 }
 ```
+```
+>[내적](https://school.programmers.co.kr/learn/courses/30/lessons/70128) 
+###
+```
+class Solution {
+    public int solution(int[] a, int[] b) {
+
+        int len = a.length;
+        int answer = 0;
+        for (int i=0; i < len; i++) {
+            int result = a[i] * b[i];
+            answer += result;
+        }
+        return answer;
+    }
+
+}
+```
