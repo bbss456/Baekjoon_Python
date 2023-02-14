@@ -99,3 +99,30 @@ class Solution {
     }
 }
 ```
+>[없는 숫자 더하기](https://school.programmers.co.kr/learn/courses/30/lessons/86051) 
+###
+```
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+  public int solution(int[] numbers) {
+
+        List<Integer> numberList = new ArrayList<>();
+
+        for (int i=0; i < numbers.length; i++) {
+            numberList.add(numbers[i]);
+        }
+
+        int answer=0;
+
+        for (int i=0; i < 10; i++) {
+            if(numberList.contains(i) != true) {
+                answer += i;
+            }
+        }
+
+        return answer;
+    }
+}
+```
