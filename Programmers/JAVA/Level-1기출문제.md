@@ -126,7 +126,6 @@ class Solution {
     }
 }
 ```
-```
 >[내적](https://school.programmers.co.kr/learn/courses/30/lessons/70128) 
 ###
 ```
@@ -142,5 +141,85 @@ class Solution {
         return answer;
     }
 
+}
+```
+
+>[성격 유형 검사하기](https://school.programmers.co.kr/learn/courses/30/lessons/118666) 
+###
+```
+import java.util.HashMap;
+
+class Solution {
+ public String solution(String[] survey, int[] choices) {
+
+        HashMap<String, Integer> surveyResult = new HashMap<>();
+
+        String[] characteristic = {"RT", "CF", "JM", "AN"};
+
+        for (int i=0; i < 4; i++) {
+            String characteristicA =  characteristic[i].substring(0,1);
+            String characteristicB =  characteristic[i].substring(1,2);
+
+            surveyResult.put(characteristicA, 0);
+            surveyResult.put(characteristicB, 0);
+        }
+
+        for (int i=0; i < survey.length; i++) {
+            int score = choices[i]-4;
+            if (score > 0) {
+                score = surveyResult.get(survey[i].substring(1,2)) + score;
+                surveyResult.put(survey[i].substring(1,2),score);
+            } else {
+                score = surveyResult.get(survey[i].substring(0,1)) + score*-1;
+                surveyResult.put(survey[i].substring(0,1), score);
+            }
+        }
+        StringBuffer stringBuffer = new StringBuffer();
+
+        if (surveyResult.get("R") > surveyResult.get("T")) {
+            stringBuffer.append("R");
+        } else if (surveyResult.get("R") == surveyResult.get("T")) {
+            stringBuffer.append(charCompareTo("R","T"));
+        } else {
+            stringBuffer.append("T");
+        }
+
+        if (surveyResult.get("C") > surveyResult.get("F")) {
+            stringBuffer.append("C");
+        } else if (surveyResult.get("C") == surveyResult.get("F")) {
+            stringBuffer.append(charCompareTo("C","F"));
+        } else {
+            stringBuffer.append("F");
+        }
+
+        if (surveyResult.get("J") > surveyResult.get("M")) {
+            stringBuffer.append("J");
+        } else if (surveyResult.get("J") == surveyResult.get("M")) {
+            stringBuffer.append(charCompareTo("J","M"));
+        } else {
+            stringBuffer.append("M");
+        }
+
+        if (surveyResult.get("A") > surveyResult.get("N")) {
+            stringBuffer.append("A");
+        } else if (surveyResult.get("A") == surveyResult.get("N")) {
+            stringBuffer.append(charCompareTo("A","N"));
+        } else {
+            stringBuffer.append("N");
+        }
+
+        System.out.println(stringBuffer);
+
+        String answer = stringBuffer.toString();
+        return answer;
+    }
+    
+        String charCompareTo(String first, String second) {
+        if (first.compareTo(second)  < 0) {
+            return first;
+        } else {
+            return second;
+        }
+    }
 }
 ```
