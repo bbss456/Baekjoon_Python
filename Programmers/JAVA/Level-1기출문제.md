@@ -223,3 +223,62 @@ class Solution {
     }
 }
 ```
+>[신고 결과 받기](https://school.programmers.co.kr/learn/courses/30/lessons/92334) 
+###
+```
+import java.util.*;
+
+class Solution {
+ public int[] solution(String[] id_list, String[] report, int k) {
+        HashMap<String,Integer> reportCountMap = new HashMap<>();
+        HashMap<String, Set>  reportMap = new HashMap<>();
+
+        for (int i=0; i < id_list.length; i++) {
+            reportCountMap.put(id_list[i],0);
+            reportMap.put(id_list[i],new HashSet<String>());
+        }
+
+        for (int i=0; i < report.length; i++) {
+            String reporter  =  report[i].split(" ")[0];
+            String badPerson = report[i].split(" ")[1];
+
+            HashSet<String> reportSet = (HashSet<String>) reportMap.get(reporter);
+            reportSet.add(badPerson);
+            reportMap.put(reporter, reportSet);
+        }
+
+        ArrayList<String> badPersonList = new ArrayList<>();
+        for (Set value : reportMap.values()) {
+            ArrayList<String> valueList = new ArrayList<>(value);
+            badPersonList.addAll(valueList);
+        }
+
+        for (String badPerson :badPersonList) {
+            int count = reportCountMap.get(badPerson) + 1;
+            reportCountMap.put(badPerson, count);
+        }
+        badPersonList.clear();
+        for (String id :id_list) {
+            if (reportCountMap.get(id) < k) {
+                reportCountMap.remove(id);
+            }
+            else {
+                badPersonList.add(id);
+            }
+        }
+        int[] answer = new int[id_list.length];
+        int i=0;
+        for (String id : id_list) {
+            ArrayList<String> badPersonListcopy = new ArrayList<>(badPersonList);
+            ArrayList<String> valueList = new ArrayList<>(reportMap.get(id));
+            int tempCount = badPersonListcopy.size();
+            badPersonListcopy.removeAll(valueList);
+            int count  = tempCount - badPersonListcopy.size();
+            answer[i] = count;
+            i++;
+        }
+
+        return answer;
+    }
+}
+```
