@@ -322,8 +322,8 @@ class Solution {
 ```
 class Solution {
    public long solution(int price, int money, int count) {
-        long pricehap =0;
-        long moneyhap =0;
+        long pricehap = 0;
+        long moneyhap = 0;
         for (int i=0; i < count; i++) {
             pricehap += price;
             moneyhap += pricehap;
