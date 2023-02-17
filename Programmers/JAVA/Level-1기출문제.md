@@ -317,3 +317,24 @@ class Solution {
     }
 }
 ```
+>[부족한 금액 찾기](https://school.programmers.co.kr/learn/courses/30/lessons/82612) 
+###
+```
+class Solution {
+   public long solution(int price, int money, int count) {
+        long pricehap =0;
+        long moneyhap =0;
+        for (int i=0; i < count; i++) {
+            pricehap += price;
+            moneyhap += pricehap;
+        }
+        long answer = 0;
+
+        if (moneyhap > money) {
+            answer = moneyhap - money;
+        }
+        
+        return answer;
+    }
+}
+```
