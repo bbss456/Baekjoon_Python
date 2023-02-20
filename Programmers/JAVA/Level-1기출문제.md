@@ -338,3 +338,148 @@ class Solution {
     }
 }
 ```
+
+>[키패드 누르기](https://school.programmers.co.kr/learn/courses/30/lessons/67256) 
+###
+```
+import java.awt.*;
+import java.util.*;
+
+class Solution {
+    public String solution(int[] numbers, String hand) {
+        String answer ="";
+
+        /* init */
+        Point leftPoint = new Point();
+
+
+        Point rightPoint = new Point();
+
+        String[][] keypad = new String[4][3];
+
+        Map<String,Point> keypadMap = new HashMap<>();
+
+        int padheight = 0;
+        int start = 0;
+
+        while (padheight < 3) {
+            int settingPointX = 0;
+            int settingPointY = 0;
+
+            if (padheight == 0) {
+                start = 1;
+
+            }
+
+            if (padheight == 1) {
+                start = 4;
+                settingPointX=0;
+                settingPointY=1;
+            }
+
+            if (padheight == 2) {
+                start = 7;
+                settingPointX=0;
+                settingPointY=2;
+            }
+
+            for (int i=start; i < start+3; i++) {
+                Point settingPoint = new Point(settingPointX, settingPointY);
+                keypadMap.put(String.valueOf(i),settingPoint);
+                settingPointX++;
+            }
+            padheight++;
+        }
+
+        leftPoint.x = 0;
+        leftPoint.y = 3;
+        rightPoint.x = 2;
+        rightPoint.y = 3;
+
+        keypadMap.put("*", new Point(0,3));
+        keypadMap.put("0", new Point(1,3));
+        keypadMap.put("#", new Point(2,3));
+
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int number : numbers) {
+           if (number == 1 || number == 4 || number ==7) {
+               stringBuffer.append("L");
+               Point tempLeftPad = keypadMap.get(String.valueOf(number));
+               leftPoint.x = 0;
+               leftPoint.y = tempLeftPad.y;
+           }
+
+            if (number == 3 || number == 6 || number == 9) {
+                stringBuffer.append("R");
+                Point tempRightPad = keypadMap.get(String.valueOf(number));
+                rightPoint.x = 2;
+                rightPoint.y = tempRightPad.y;
+            }
+
+            if (number == 2 || number == 5 || number == 8 || number == 0) {
+                Point target = keypadMap.get(String.valueOf(number));
+                int leftdistance = findtarget(leftPoint, target);
+                int rightdistance = findtarget(rightPoint, target);
+
+                if (leftdistance < rightdistance) {
+                    stringBuffer.append("L");
+                    leftPoint.x = target.x;
+                    leftPoint.y = target.y;
+                }
+                else if (leftdistance > rightdistance) {
+                    stringBuffer.append("R");
+                    rightPoint.x = target.x;
+                    rightPoint.y = target.y;
+                }
+                else if (leftdistance == rightdistance) {
+                    if(hand.equals("right")) {
+                        stringBuffer.append("R");
+                        rightPoint.x = target.x;
+                        rightPoint.y = target.y;
+                    } else {
+                        stringBuffer.append("L");
+                        leftPoint.x = target.x;
+                        leftPoint.y = target.y;
+                    }
+                }
+            }
+        }
+        answer = stringBuffer.toString();
+        System.out.println(answer);
+
+        return answer;
+    }
+
+    public int findtarget (Point tempPoint, Point targetPoint) {
+
+        int targetX = targetPoint.x;
+        int targetY = targetPoint.y;
+
+        int tempX = tempPoint.x;
+        int tempY = tempPoint.y;
+
+        int count = 0;
+        while (tempX != targetX) {
+            if (tempX < targetX) {
+                tempX++;
+            }
+            else if (tempX > targetX) {
+                tempX--;
+            }
+            count++;
+        }
+
+        while (tempY != targetY) {
+            if (tempY < targetY) {
+                tempY++;
+            }
+            else if (tempY > targetY) {
+                tempY--;
+            }
+            count++;
+        }
+
+        return  count;
+    }
+}
+```
