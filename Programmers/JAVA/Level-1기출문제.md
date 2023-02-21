@@ -606,3 +606,30 @@ class Solution {
     }
 }
 ```
+>[예산](https://school.programmers.co.kr/learn/courses/30/lessons/68935) 
+###
+```
+import java.util.Arrays;
+class Solution {
+    public int solution(int[] d, int budget) {
+        int answer = 0;
+        int i=0;
+        Arrays.sort(d);
+
+        while (true){
+            if(budget==0 || i==d.length){
+                break;
+            }else{
+                if(budget >= d[i]){  
+                    budget -= d[i];
+                    i++;
+                    answer++;
+                }else{
+                    break;
+                }
+            }
+        }
+        return answer;
+    }
+}
+```
