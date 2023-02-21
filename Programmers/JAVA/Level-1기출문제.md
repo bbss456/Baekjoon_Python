@@ -483,3 +483,126 @@ class Solution {
     }
 }
 ```
+>[신규 아이디 추천](https://school.programmers.co.kr/learn/courses/30/lessons/72410) 
+###
+```
+import java.util.*;
+class Solution {
+       public String solution(String new_id) {
+
+        /*1. 소문자 변환 */
+        new_id = new_id.toLowerCase();
+
+        String match = "[^0-9a-zA-Z._-]";
+        /*2. 특수문자 제거 */
+        new_id = new_id.replaceAll(match, "");
+
+        /*3. 중복된 점 제거 */
+        new_id = removeduplicationdot(new_id);
+
+        /*4. 맨처음 맨뒤 점 제거 */
+        new_id = removeFirstLast(new_id);
+
+        /*5. 빈 문자열 제거 */
+        if (new_id.equals("")) {
+            new_id = "a";
+        }
+        /*6. 문자열 길이 16이상 */
+        if (new_id.length() > 15) {
+           new_id = new_id.substring(0,15);
+           String dotCheck = String.valueOf(new_id.charAt(new_id.length()-1));
+           if (dotCheck.equals(".")) {
+              new_id = new_id.substring(0,14);
+              System.out.println(new_id);
+           }
+        }
+        /*7. new_id의 길이가 2자 이하라면 */
+
+        if (new_id.length() <= 2) {
+            while (new_id.length() <3) {
+                new_id = new_id + String.valueOf(new_id.charAt(new_id.length()-1));
+            }
+        }
+
+        System.out.println(new_id);
+        String answer = new_id;
+        return answer;
+    }
+
+    public String removeduplicationdot(String new_id) {
+        Stack<String> stack = new Stack<>();
+        stack.add(String.valueOf(new_id.charAt(0)));
+
+        for (int i=1; i < new_id.length(); i++) {
+            String Stacktop = stack.peek();
+            String charID = String.valueOf(new_id.charAt(i));
+            if (Stacktop.equals(".") && charID.equals(".") ) {
+
+            } else {
+                stack.add(charID);
+            }
+        }
+
+        StringBuffer stringBuffer = new StringBuffer();
+
+        for (int i=0; i < stack.size(); i++) {
+            stringBuffer.append(stack.get(i));
+        }
+
+        return stringBuffer.toString();
+    }
+
+    public String removeFirstLast(String new_id) {
+
+        String firstChar = String.valueOf(new_id.charAt(0));
+        String lastChar = String.valueOf(new_id.charAt(new_id.length()-1));
+
+        StringBuffer stringBuffer = new StringBuffer();
+
+        if (firstChar.equals(".") && lastChar.equals(".")) {
+            for (int i=1; i <new_id.length()-1; i++) {
+                stringBuffer.append(String.valueOf(new_id.charAt(i)));
+            }
+            new_id = stringBuffer.toString();
+        }
+
+        else if (firstChar.equals(".")) {
+            for (int i=1; i <new_id.length(); i++) {
+                stringBuffer.append(String.valueOf(new_id.charAt(i)));
+            }
+            new_id = stringBuffer.toString();
+        }
+
+        else if (lastChar.equals(".")) {
+            for (int i=0; i <new_id.length()-1; i++) {
+                stringBuffer.append(String.valueOf(new_id.charAt(i)));
+            }
+            new_id = stringBuffer.toString();
+        }
+        return new_id;
+    }
+
+}
+```
+>[3진법](https://school.programmers.co.kr/learn/courses/30/lessons/68935) 
+###
+```
+class Solution {
+    public int solution(int number) {
+        StringBuffer stringbuffer = new StringBuffer();
+        int current = number;
+        int N = 3;
+
+        while(current > 0){
+            if(current % N < 10){
+                stringbuffer.append(current % N);
+            } else {
+                stringbuffer.append((char)(current % N - 10 + 'A'));
+            }
+            current /= N;
+        }
+       
+      return Integer.parseInt(String.valueOf(stringbuffer),3);
+    }
+}
+```
