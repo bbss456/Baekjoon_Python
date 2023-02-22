@@ -610,25 +610,113 @@ class Solution {
 ###
 ```
 import java.util.Arrays;
-class Solution {
-    public int solution(int[] d, int budget) {
-        int answer = 0;
-        int i=0;
-        Arrays.sort(d);
 
-        while (true){
-            if(budget==0 || i==d.length){
+class Solution {
+  public int solution(int[] d, int budget) {
+      int answer = 0;
+
+            int sum = 0;
+
+        Arrays.sort(d);
+        for (int i = 0; i < d.length; i++) {
+            sum += d[i];
+            if (sum <= budget) {
+                answer++;
+            } else {
                 break;
-            }else{
-                if(budget >= d[i]){  
-                    budget -= d[i];
-                    i++;
-                    answer++;
-                }else{
-                    break;
+            }
+        }
+
+      return answer;
+  }
+}
+```
+>[로또의 최고 순위와 최저 순위](https://school.programmers.co.kr/learn/courses/30/lessons/77484) 
+###
+```
+import java.util.*;
+class Solution {
+     public int[] solution(int[] lottos, int[] win_nums) {
+
+        /*맵 랭킹*/
+        HashMap<Integer,Integer> rankMap = new HashMap<>();
+
+        int rankCount = 6;
+        for (int i=0; i <=6; i++) {
+            if (i <1) {
+                rankMap.put(i,rankCount);
+            } else {
+                rankMap.put(i,rankCount);
+                rankCount--;
+            }
+        }
+
+        ArrayList<Integer> arrayListMax = new ArrayList<>();
+        ArrayList<Integer> arrayListMin = new ArrayList<>();
+
+        for (int number : lottos) {
+            if (number == 0) {
+                arrayListMax.add(number);
+            } else {
+                for (int i=0; i <6; i++){
+                    if (win_nums[i] == number) {
+                        arrayListMin.add(number);
+                        arrayListMax.add(number);
+                    }
                 }
             }
         }
+        
+        int[] answer = new int[2];
+
+        answer[1] = rankMap.get(arrayListMin.size());
+        answer[0] = rankMap.get(arrayListMax.size());
+        
+        return answer;
+    }
+}
+```
+>[다트 게임](https://school.programmers.co.kr/learn/courses/30/lessons/17682) 
+###
+```
+import java.util.*;
+class Solution {
+     public int[] solution(int[] lottos, int[] win_nums) {
+
+        /*맵 랭킹*/
+        HashMap<Integer,Integer> rankMap = new HashMap<>();
+
+        int rankCount = 6;
+        for (int i=0; i <=6; i++) {
+            if (i <1) {
+                rankMap.put(i,rankCount);
+            } else {
+                rankMap.put(i,rankCount);
+                rankCount--;
+            }
+        }
+
+        ArrayList<Integer> arrayListMax = new ArrayList<>();
+        ArrayList<Integer> arrayListMin = new ArrayList<>();
+
+        for (int number : lottos) {
+            if (number == 0) {
+                arrayListMax.add(number);
+            } else {
+                for (int i=0; i <6; i++){
+                    if (win_nums[i] == number) {
+                        arrayListMin.add(number);
+                        arrayListMax.add(number);
+                    }
+                }
+            }
+        }
+        
+        int[] answer = new int[2];
+
+        answer[1] = rankMap.get(arrayListMin.size());
+        answer[0] = rankMap.get(arrayListMax.size());
+        
         return answer;
     }
 }
