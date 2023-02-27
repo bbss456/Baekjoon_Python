@@ -721,3 +721,170 @@ class Solution {
     }
 }
 ```
+>[1차 비밀지도](https://school.programmers.co.kr/learn/courses/30/lessons/17681) 
+###
+```
+class Solution {
+    public String[] solution(int n, int[] arr1, int[] arr2) {
+        String[][] map = new String[n][n];
+
+
+        for (int i=0; i < n; i++) {
+            String binaryString = Integer.toBinaryString(arr1[i]);
+            binaryString=String.format("%1$" + n + "s", binaryString).replace(' ', '0');
+
+            String binaryString2 = Integer.toBinaryString(arr2[i]);
+            binaryString2=String.format("%1$" + n + "s", binaryString2).replace(' ', '0');
+
+            for (int j=0; j < n; j++) {
+                map[i][j] = "0";
+                String number= String.valueOf(binaryString.charAt(j));
+                if (number.equals("1")) {
+                    map[i][j] = "#";
+                }
+
+                String number2 = String.valueOf(binaryString2.charAt(j));
+                if (number2.equals("1")) {
+                    map[i][j] = "#";
+                }
+            }
+        }
+
+        String[] answer = new String[n];
+        for (int i=0; i < n; i++) {
+            StringBuffer stringBuffer = new StringBuffer();
+            for (int j=0; j < n; j++) {
+                if(map[i][j].equals("#")) {
+                    stringBuffer.append(map[i][j]);
+                } else {
+                    stringBuffer.append(" ");
+                }
+            }
+            answer[i] = stringBuffer.toString();
+        }
+
+        return answer;
+    }
+}
+```
+>[숫자 문자열과 영단어](https://school.programmers.co.kr/learn/courses/30/lessons/81301) 
+###
+```
+import java.util.*;
+class Solution {
+     public int solution(String s) {
+        Queue<String> queue = new LinkedList<>();
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i=0; i < s.length(); i++) {
+            queue.add(String.valueOf(s.charAt(i)));
+        }
+
+        while (!queue.isEmpty()) {
+            String que = queue.poll();
+            switch (que) {
+                case "z" :
+                    stringBuffer.append(0);
+                    queue.poll();
+                    queue.poll();
+                    queue.poll();
+                    break;
+
+                case "o" :
+                    stringBuffer.append(1);
+                    queue.poll();
+                    queue.poll();
+                    break;
+
+                case "t" :
+                    String nextChar = queue.poll();
+                    if(nextChar.equals("w")) {
+                        stringBuffer.append(2);
+                        queue.poll();
+                    } else {
+                        stringBuffer.append(3);
+                        queue.poll();
+                        queue.poll();
+                        queue.poll();
+                    }
+                    break;
+                case "f" :
+                    String nextChar2 = queue.poll();
+                    if(nextChar2.equals("o")) {
+                        stringBuffer.append(4);
+                        queue.poll();
+                        queue.poll();
+                    } else {
+                        stringBuffer.append(5);
+                        queue.poll();
+                        queue.poll();
+                    }
+                    break;
+                case "s" :
+                    String nextChar3 = queue.poll();
+                    if(nextChar3.equals("i")) {
+                        stringBuffer.append(6);
+                        queue.poll();
+                    } else {
+                        stringBuffer.append(7);
+                        queue.poll();
+                        queue.poll();
+                        queue.poll();
+                    }
+                    break;
+                case "e" :
+                    stringBuffer.append(8);
+                    queue.poll();
+                    queue.poll();
+                    queue.poll();
+                    queue.poll();
+                    break;
+                case "n" :
+                    stringBuffer.append(9);
+                    queue.poll();
+                    queue.poll();
+                    queue.poll();
+                    break;
+                default :
+                    stringBuffer.append(que);
+            }
+        }
+
+        System.out.println(stringBuffer.toString());
+
+        int answer = Integer.valueOf(stringBuffer.toString());
+        return answer;
+    }
+}
+```
+>[두개 뽑아서 더하기](https://school.programmers.co.kr/learn/courses/30/lessons/68644) 
+###
+```
+import java.util.*;
+class Solution {
+ public int[] solution(int[] numbers) {
+
+        HashSet<Integer> set = new HashSet<>();
+
+        for (int i=0; i<numbers.length; i++) {
+            if(i == numbers.length) {
+                break;
+            }
+            else {
+                for(int j=i+1; j<numbers.length; j++){
+                    int hap = numbers[i];
+                    hap += numbers[j];
+                    set.add(hap);
+                }
+            }
+        }
+        ArrayList<Integer> arrayList = new ArrayList<>(set);
+        Collections.sort(arrayList);
+        int[] answer = new int[arrayList.size()];
+        for (int i=0; i < arrayList.size(); i++) {
+            answer[i] = arrayList.get(i);
+        }
+
+        return answer;
+    }
+}
+```
