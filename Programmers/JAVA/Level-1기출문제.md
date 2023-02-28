@@ -925,3 +925,46 @@ class Solution {
     }    
 }
 ```
+
+>[실패율](https://school.programmers.co.kr/learn/courses/30/lessons/42889) 
+###
+```
+
+import java.util.*;
+class Solution {
+    public int[] solution(int N, int[] stages) {
+          //5가 보다 큰게 없을때
+        HashMap<Integer,Float> resultMap = new HashMap<>();
+        /*올림*/
+        for (int i=1; i<=N; i++) {
+            float allUser = 0;
+            float failUser = 0;
+            // I보다 큰지 확인
+            for(int number : stages) {
+             if(i <= number) {
+                 allUser++;
+             }
+             if (i==number) {
+                 failUser++;
+             }
+            
+            }
+            
+            if(allUser==0) {
+               resultMap.put(i,(float) 0);
+            } else {
+               resultMap.put(i, failUser/allUser);   
+            }
+        }
+        ArrayList<Integer> list = new ArrayList<>(resultMap.keySet());
+        Collections.sort(list, (o1, o2) -> (resultMap.get(o2).compareTo(resultMap.get(o1))));
+        
+        int[] answer = new int[list.size()];
+        int count = 0; 
+        for (int key : list) {
+           answer[count++] = key; 
+        }
+        return answer;
+    }
+}
+```
